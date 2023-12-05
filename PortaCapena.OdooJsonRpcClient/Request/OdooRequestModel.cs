@@ -96,6 +96,13 @@ namespace PortaCapena.OdooJsonRpcClient.Request
             return new OdooRequestModel(param);
         }
 
+        public static OdooRequestModel ChangeProductQuantity(OdooConfig config, int uid, long[] ids, OdooContext context = null)
+        {
+            var param = new OdooRequestParams(config.ApiUrlJson, "object", "execute_kw", config.DbName, uid, config.Password, "stock.change.product.qty", OdooOperation.ChangeProductQty, ids, MapQuery(context));
+            return new OdooRequestModel(param);
+        }
+
+
         protected static Dictionary<string, object> MapQuery(OdooContext context, OdooQuery query = null)
         {
             if (query == null && (context == null || !context.Any())) return null;

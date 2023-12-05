@@ -245,7 +245,19 @@ namespace PortaCapena.OdooJsonRpcClient
             var request = OdooRequestModel.Delete(odooConfig, userUid, tableName, ids, context);
             return await CallAndDeserializeAsync<bool>(request, cancellationToken);
         }
+        #endregion
 
+        #region Change product quantity
+        public async Task<OdooResult<Dictionary<string, object>>> ChangeProductQuantity(long changeProductQuantityId, OdooContext context = null, CancellationToken cancellationToken = default)
+        {
+            return await ExecuteWitrAccesDenideRetryAsync(userUid => ChangeProductQuantity(Config, userUid, changeProductQuantityId, SelectContext(context, Config.Context), cancellationToken));
+        }
+
+        public static async Task<OdooResult<Dictionary<string, object>>> ChangeProductQuantity(OdooConfig config, int userUid, long changeProductQuantityId, OdooContext context, CancellationToken cancellationToken = default)
+        {
+            var request = OdooRequestModel.ChangeProductQuantity(config, userUid, new long[] { changeProductQuantityId }, context);
+            return await CallAndDeserializeAsync<Dictionary<string, object>>(request, cancellationToken);
+        }
         #endregion
 
         #region Login
